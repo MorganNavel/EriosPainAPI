@@ -13,7 +13,7 @@ export function initDb(){
     PainRecord.belongsTo(Patient);
     (async () => {
         try {
-            await sequelize.sync({ force: true });
+            await sequelize.sync({ force: false });
         } catch (error) {
             console.error('Unable to sync database:', error);
         }
