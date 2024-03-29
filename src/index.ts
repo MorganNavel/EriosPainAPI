@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import { initDb } from "./sequelize";
 import { Patient } from "./models/PatientModel";
 import { PainRecord } from "./models/PainRecordModel";
-import { dateParser } from "./helper";
 import { validateDateMiddleware, patientMiddleware } from "./middleware";
 dotenv.config();
 
