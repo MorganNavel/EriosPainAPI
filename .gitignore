@@ -1,3 +1,19 @@
-node_modules
-.env
+# Dossiers à ignorer
+node_modules/
+dist/
+.build/
+
+# Fichiers à ignorer
+package-lock.json
+tsconfig.json
+*.js
+*.js.map
+# Fichiers de base de données SQLite
 *.sqlite
+*.db
+
+# Fichiers temporaires de SQLite
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+.env
