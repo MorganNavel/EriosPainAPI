@@ -4,7 +4,8 @@ import bodyParser from "body-parser";
 import { initDb } from "./sequelize";
 import { Patient } from "./models/PatientModel";
 import { PainRecord } from "./models/PainRecordModel";
-import { validateNaissanceDateMiddleware, patientMiddleware, validateStreamDateMiddleware } from "./middleware";
+import { Op, Sequelize } from 'sequelize';
+import { validateNaissanceDateMiddleware, patientMiddleware, validateStreamDateMiddleware, validateStreamDatesMiddleware } from "./middleware";
 dotenv.config();
 
 const port = process.env.API_PORT;
@@ -72,7 +73,7 @@ app.post("/api/patient/:id/streams" , validateStreamDateMiddleware, async (req: 
   ));
   try {
     const data = (await PainRecord.bulkCreate(painRecords)).map((record) => (record.dataValues));
-    return res.status(200).json({message:"Success",painRecords})
+    return res.status(200).json({message:"Success", painRecords})
   } catch(error){
     return res.status(500).json({message:"Fail", error})
   }
@@ -81,12 +82,32 @@ app.get("/api/patient/:id/streams", async (req: Request, res: Response) => {
   const id  = parseInt(req.params.id);
   try {
     const data = (await PainRecord.findAll({where: {patientId: id}})).map((record) => (record.dataValues));
-    return res.status(200).json({message:"Success",data})
+    return res.status(200).json({message:"Success", data})
   } catch(error){
     return res.status(500).json({message:"Fail", error})
   }
 });
 
+
+app.delete('/api/patient/:patientId/streams',validateStreamDatesMiddleware ,async (req: Request, res: Response) => {
+  const { startDate, endDate } = req.body; // Supposons que les dates de début et de fin sont envoyées dans le corps de la requête
+  const patientId = req.params.patientId;
+
+  try {
+      // Supprimez les streams pour le patient spécifié entre les dates de début et de fin
+      const deleted = await PainRecord.destroy({
+          where: {
+              patientId: patientId,
+              evaluation_date: {
+                  [Op.between]: [startDate, endDate]
+              }
+          }
+      });
+      res.status(200).json({ message: 'Success', deleted });
+  } catch (error) {
+      res.status(500).json({ message: 'Fail', error });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is running on  http://localhost:${port}`);

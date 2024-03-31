@@ -31,10 +31,32 @@ export function validateNaissanceDateMiddleware(
     }
     next();
   }
+export function validateStreamDatesMiddleware(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { startDate, endDate } = req.body;
+  
+    const startDateObj = validateDate(startDate);
+    const endDateObj = validateDate(endDate);
+  
+    if (!startDateObj || !endDateObj) {
+      return res.status(400).json({ message: "Le format des dates doit être (DD/MM/YYYY ou DD-MM-YYYY)" });
+    }
+  
+    if (startDateObj.getTime() >= endDateObj.getTime()) {
+      return res.status(400).json({ message: "La date de début doit être antérieure à la date de fin" });
+    }
+  
+    req.body.startDate = startDateObj;
+    req.body.endDate = endDateObj;
+    next();
+  }
 function validateDate(dateString: string) {
     const dateObj = dateParser(dateString);
     if (isNaN(dateObj.getTime())) {
-      return 
+      return null
     }
     return dateObj
   }

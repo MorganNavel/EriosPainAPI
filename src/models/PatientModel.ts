@@ -32,6 +32,7 @@ function PatientModel(sequelize: Sequelize, DataTypes: any) {
           modelName: 'patient',
         }
       );
+      
     return Patient
 }
 export { PatientModel, Patient }

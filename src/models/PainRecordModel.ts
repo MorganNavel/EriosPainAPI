@@ -19,13 +19,30 @@ function PainRecordModel(sequelize: Sequelize, DataTypes: any){
             type: DataTypes.DATE,
             allowNull: false,
         },
+        patientId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: Patient,
+                key: 'id'
+            },
+            unique: 'compositeIndex' // Définit la contrainte d'unicité pour patientId
+        }
     },
     {
         timestamps: false,
         sequelize,
         modelName: 'painRecord',
-    }
+        indexes: [
+            {
+              unique: true,
+              fields: ['evaluation_date', 'patientId'],
+              name: 'unique_evaluation_date_patientId'
+            }
+          ]
+        }
     );
+    
     return PainRecord
 }
 export {PainRecordModel, PainRecord}

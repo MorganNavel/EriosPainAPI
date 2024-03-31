@@ -23,6 +23,7 @@ export function initDb(){
     const PainRecord = PainRecordModel(sequelize, DataTypes);
     Patient.hasMany(PainRecord);
     PainRecord.belongsTo(Patient);
+    
     (async () => {
         try {
             await sequelize.sync({ force: false });
