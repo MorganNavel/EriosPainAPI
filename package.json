@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/MorganNavel/EriosPainAPI#readme",
   "dependencies": {
+    "@types/sequelize": "^4.28.20",
     "body-parser": "^1.20.2",
     "casual": "^1.6.2",
     "cors": "^2.8.5",
@@ -27,6 +28,7 @@
     "joi": "^17.12.1",
     "jsonwebtoken": "^9.0.2",
     "node": "^21.6.1",
+    "pg": "^8.11.4",
     "reflect-metadata": "^0.2.1",
     "sequelize": "^6.37.1",
     "sequelize-typescript": "^2.1.6",

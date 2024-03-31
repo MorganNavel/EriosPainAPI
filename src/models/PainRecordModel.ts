@@ -15,6 +15,10 @@ function PainRecordModel(sequelize: Sequelize, DataTypes: any){
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        evaluation_date: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
     },
     {
         timestamps: false,

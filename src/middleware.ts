@@ -2,18 +2,41 @@ import { Request, Response, NextFunction } from "express";
 import { dateParser } from "./helper";
 import jwt from "jsonwebtoken";
 import { patientSchema } from "./schemes/patient";
-export function validateDateMiddleware(
+export function validateNaissanceDateMiddleware(
     req: Request,
     res: Response,
     next: NextFunction,
   ) {
     const { dateNaissance } = req.body;
-    const dateObj = dateParser(dateNaissance);
-    if (isNaN(dateObj.getTime())) {
-      return res.status(400).json({ message: "Le format de la date doit être (DD/MM/YYYY ou DD-MM-YYYY)" });
+    const dateObj = validateDate(dateNaissance)
+    if(!dateObj){
+      return res.status(400).json({ message: "Le format de la date de naissance doit être (DD/MM/YYYY ou DD-MM-YYYY)" });
     }
     req.body.dateNaissance = dateObj;
-    next(); // Move this inside the try block
+    next();
+  }
+
+  export function validateStreamDateMiddleware(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { records } = req.body;
+    for (const record of records) {
+      const dateObj = validateDate(record.evaluation_date)
+      if(!dateObj){
+        return res.status(400).json({ message: "Le format de la date d'évaluation doit être (DD/MM/YYYY ou DD-MM-YYYY)" });
+      }
+      record.evaluation_date = dateObj;
+    }
+    next();
+  }
+function validateDate(dateString: string) {
+    const dateObj = dateParser(dateString);
+    if (isNaN(dateObj.getTime())) {
+      return 
+    }
+    return dateObj
   }
   
 

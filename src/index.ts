@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import { initDb } from "./sequelize";
 import { Patient } from "./models/PatientModel";
 import { PainRecord } from "./models/PainRecordModel";
-import { validateDateMiddleware, patientMiddleware } from "./middleware";
+import { validateNaissanceDateMiddleware, patientMiddleware, validateStreamDateMiddleware } from "./middleware";
 dotenv.config();
 
 const port = process.env.API_PORT;
@@ -24,7 +24,7 @@ app.get("/api/patients", async (req: Request, res: Response) => {
     return res.status(500).json({message:"Fail", error})
   }
 })
-app.post("/api/patient",patientMiddleware,validateDateMiddleware, async (req: Request, res: Response) => {
+app.post("/api/patient", validateNaissanceDateMiddleware, patientMiddleware, async (req: Request, res: Response) => {
   const { nom, dateNaissance, genre } = req.body;
   
   try {
@@ -34,27 +34,47 @@ app.post("/api/patient",patientMiddleware,validateDateMiddleware, async (req: Re
     return res.status(500).json({message:"Fail", error})
   }
 });
+app.delete("/api/patient/:id", async (req: Request, res: Response) => {
+  const id  = parseInt(req.params.id);
+  try {
+    const deleted = await Patient.destroy({where: {id}});
+    return res.status(200).json({message:"Success", deleted})
+  } catch(error){
+    return res.status(500).json({message:"Fail", error})
+  }
+});
 
-app.post("/api/patient/:id/streams", async (req: Request, res: Response) => {
+app.post("/api/patient/:id/streams" , validateStreamDateMiddleware, async (req: Request, res: Response) => {
   /*
   Example of request body
   {
-    "records":[1,2,3,5,4,9,7,5,2,5]
-  }
+    "records":[
+                {
+                  "level": 5,
+                  "evaluation_date": "01-09-2021 00:00:00"
+                },
+                {
+                  "level": 6,
+                  "evaluation_date": "01-09-2021 06:00:00"
+                }
+                ...
+              ]
   */
   const { records } = req.body;
   const id  = parseInt(req.params.id);
 
-  const painRecords = records.map((record: number) => ({
-    level: record,
-    patientId: id,
-    
-  }));
+  const painRecords = records.map((record: any) => (
+    {
+      level: record.level,
+      evaluation_date: record.evaluation_date,
+      patientId: id,
+  }
+  ));
   try {
     const data = (await PainRecord.bulkCreate(painRecords)).map((record) => (record.dataValues));
-    return res.status(200).json({message:"Success",data})
+    return res.status(200).json({message:"Success",painRecords})
   } catch(error){
-    return res.status(500).json({message:"Fail", error:"Patient not found"})
+    return res.status(500).json({message:"Fail", error})
   }
 });
 app.get("/api/patient/:id/streams", async (req: Request, res: Response) => {
