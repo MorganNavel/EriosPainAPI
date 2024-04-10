@@ -1,54 +1,54 @@
 # EriosPainAPI
 
+## Environnement de Test DPI
 
-## DPI Test Environment
+Ce référentiel sert d'environnement de test visant à reproduire un système d'Information Patient Numérisé (DPI), bien que sa véracité ne soit pas garantie. L'objectif principal est de simuler les fonctionnalités et les interactions au sein d'un système DPI, notamment en ce qui concerne la gestion des données des patients.
 
-This repository serves as a testing environment aimed at replicating a Digitized Patient Information (DPI) system, albeit without guaranteeing its veracity. The primary focus is to simulate the functionalities and interactions within a DPI system, particularly regarding patient data management.
+### Hébergement de la Base de Données
 
-### Database Hosting
+La base de données est hébergée sur un serveur gratuit utilisant **Render**, une plateforme fournissant des services cloud. Vous pouvez trouver plus d'informations sur Render [ici](https://render.com/).
 
-The database is hosted on a free server utilizing **Render**, a platform providing cloud services. You can find more information about Render [here](https://render.com/).
+### Schéma de la Base de Données
 
-### Database Schema
-
-The database comprises two main entities: **Patient** and **PainRecord**.
+La base de données comprend deux entités principales : **Patient** et **PainRecord**.
 
 #### Patient
-- **id**: Unique identifier for each patient.
-- **name**: Name of the patient.
-- **Date of birth**: Date of birth of the patient.
-- **genre**: Gender of the patient.
+- **id** : Identifiant unique pour chaque patient.
+- **nom** : Nom du patient.
+- **Date de naissance** : Date de naissance du patient.
+- **genre** : Genre du patient.
 
 #### PainRecord
-- **id**: Unique identifier for each pain record.
-- **level**: Intensity level of pain recorded.
-- **evaluation date**: Date of pain evaluation.
-- **patient id**: Reference to the corresponding patient.
+- **id** : Identifiant unique pour chaque enregistrement de douleur.
+- **level** : Niveau d'intensité de la douleur enregistrée.
+- **evaluation date** : Date de l'évaluation de la douleur.
+- **patient id** : Référence vers le patient correspondant.
 
-### API Endpoints
+### Points d'accès de l'API
 
-The API exposes various endpoints to interact with the database.
+L'API expose divers points d'accès pour interagir avec la base de données.
 
-#### GET Endpoints:
-- **"/api/patient/:id/streams"**: Retrieves pain data for a specific patient.
-- **"/api/patients"**: Retrieves information about all patients.
+#### Points d'accès GET :
+- **"/api/patient/:id/streams"** : Récupère les données de douleur pour un patient spécifique.
+- **"/api/patients"** : Récupère des informations sur tous les patients.
 
-#### POST Endpoints:
-- **"/api/patient/:id/streams"**: Adds pain data for a specific patient.
-- **"/api/patient"**: Adds a new patient to the database.
+#### Points d'accès POST :
+- **"/api/patient/:id/streams"** : Ajoute des données de douleur pour un patient spécifique.
+- **"/api/patient"** : Ajoute un nouveau patient à la base de données.
 
-#### DELETE Endpoints:
-- **"/api/patient/:id/streams"**: Deletes pain data for a specific patient within a given interval.
-- **"/api/patient/:id"**: Deletes a patient from the database.
+#### Points d'accès DELETE :
+- **"/api/patient/:id/streams"** : Supprime les données de douleur pour un patient spécifique dans un intervalle donné.
+- **"/api/patient/:id"** : Supprime un patient de la base de données.
 
-### Usage
+### Utilisation
 
-To utilize this repository effectively, follow these steps:
-1. Ensure you have the necessary dependencies installed.
-2. Set up the database hosting using Render or a similar service.
-3. Configure the API endpoints according to your requirements.
-4. Test and modify the repository as needed to replicate your desired DPI environment.
+Pour utiliser efficacement ce référentiel, suivez ces étapes :
+1. Assurez-vous d'avoir installé les dépendances nécessaires.
+2. Configurez l'hébergement de la base de données en utilisant Render ou un service similaire.
+3. Configurez les points d'accès de l'API selon vos besoins.
+4. Testez et modifiez le référentiel selon vos besoins pour reproduire l'environnement DPI souhaité.
 
-### Disclaimer
+### Avertissement
 
-Please note that while this repository aims to simulate a DPI environment, it does not ensure the accuracy or reliability of the data. Use it solely for testing and educational purposes.
+Veuillez noter que bien que ce référentiel vise à simuler un environnement DPI, il ne garantit pas l'exactitude ou la fiabilité des données. Utilisez-le uniquement à des fins de test et d'éducation.
+
