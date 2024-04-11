@@ -85,13 +85,13 @@ export function authMiddleware(
     next: NextFunction,
   ) {
     const token = req.headers.authorization?.split(" ")[1]; // Récupérer le JWT du header Authorization
-  
+    console.log(token)
     if (!token) {
       return res.status(401).json({ message: "Non autorisé. Token manquant." });
     }
   
     try {
-      const decoded: any = jwt.verify(token, process.env.SECRET_KEY!);
+      const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
       //TOKEN DECODED
       req.body.userId = decoded.userId;
       next();

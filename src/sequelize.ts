@@ -28,7 +28,7 @@ export function initDb(){
     
     (async () => {
         try {
-            await sequelize.sync({ force: false });
+            await sequelize.sync({ force: true });
             return sequelize;
         } catch (error) {
             console.error('Unable to sync database:', error);
