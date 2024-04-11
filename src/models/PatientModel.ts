@@ -27,7 +27,7 @@ function PatientModel(sequelize: Sequelize, DataTypes: any) {
             allowNull: false,
           },
           genre: {
-            type: DataTypes.ENUM('M', 'F', 'O'), // Définition de l'énumération avec les valeurs autorisées
+            type: DataTypes.ENUM('F', 'O', 'H'), // Définition de l'énumération avec les valeurs autorisées
             allowNull: false
           },
           

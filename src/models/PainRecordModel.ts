@@ -26,7 +26,6 @@ function PainRecordModel(sequelize: Sequelize, DataTypes: any){
                 model: Patient,
                 key: 'id'
             },
-            unique: 'compositeIndex' // Définit la contrainte d'unicité pour patientId
         }
     },
     {

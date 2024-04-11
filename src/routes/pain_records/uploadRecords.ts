@@ -1,6 +1,7 @@
 import { Express, Request, Response } from "express";
 import { PainRecord } from "../../models/PainRecordModel";
 import { authMiddleware, validateStreamDateMiddleware } from "../../middleware";
+import { forEachChild } from "typescript";
 
 
 export default (app: Express) => {
@@ -30,9 +31,10 @@ export default (app: Express) => {
             patientId: id,
         }
         ));
+        console.log(painRecords)
         try {
-        const data = (await PainRecord.bulkCreate(painRecords)).map((record) => (record.dataValues));
-        return res.status(200).json({message:"Success", painRecords})
+            await PainRecord.bulkCreate(painRecords);
+            return res.status(200).json({message:"Success"})
         } catch(error){
         return res.status(500).json({message:"Fail", error})
         }
