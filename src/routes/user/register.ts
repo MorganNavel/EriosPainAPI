@@ -27,7 +27,7 @@ export default (app: Express) => {
 
             // Création d'un nouvel utilisateur dans la base de données
             const newUser = await User.create({ nom, prenom, username, password: hashedPassword, occupation, salt });
-            
+            console.log(process.env.JWT_SECRET)
 
             // Génération du JWT
             const accessToken = sign({ userId: newUser.dataValues.id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
@@ -36,7 +36,7 @@ export default (app: Express) => {
             res.status(201).json({message:"Sucess", user: {nom, prenom, username, occupation}, accessToken });
         } catch (error) {
             console.error("Erreur lors de l'inscription :", error);
-            res.status(500).json({ message:"Fail" , error:"Erreur lors de l'inscription" });
+            res.status(500).json({ message:"Fail" , error:"Erreur lors de l'inscription",erreur:error });
         }
     });
 };
