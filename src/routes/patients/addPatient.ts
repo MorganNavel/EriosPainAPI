@@ -5,10 +5,10 @@ import { validateNaissanceDateMiddleware, patientMiddleware, authMiddleware } fr
 
 export default (app: Express) => {
     app.post("/api/patient",validateNaissanceDateMiddleware, patientMiddleware, authMiddleware , async (req: Request, res: Response) => {
-        const { nom, dateNaissance, genre, prenom } = req.body;
+        const { nom, dateNaissance, genre, prenom, IPP } = req.body;
         
         try {
-        const patient = await Patient.create({nom, dateNaissance, genre, prenom});
+        const patient = await Patient.create({nom, dateNaissance, genre, prenom, IPP});
         return res.status(200).json({message:"Success", data: {patient}})
         } catch(error){
         return res.status(500).json({message:"Fail", error})
