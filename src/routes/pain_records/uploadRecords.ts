@@ -4,7 +4,7 @@ import { authMiddleware, validateStreamDateMiddleware } from "../../middleware";
 
 
 export default (app: Express) => {
-    app.post("/api/patient/:id/streams", authMiddleware, validateStreamDateMiddleware, async (req: Request, res: Response) => {
+    app.post("/api/patient/:id/streams", validateStreamDateMiddleware, authMiddleware ,async (req: Request, res: Response) => {
         /*
         Example of request body
         {

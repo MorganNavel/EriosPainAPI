@@ -4,7 +4,7 @@ import { Patient } from "../../models/PatientModel";
 import { validateNaissanceDateMiddleware, patientMiddleware, authMiddleware } from "../../middleware";
 
 export default (app: Express) => {
-    app.post("/api/patient", authMiddleware ,validateNaissanceDateMiddleware, patientMiddleware, async (req: Request, res: Response) => {
+    app.post("/api/patient",validateNaissanceDateMiddleware, patientMiddleware, authMiddleware , async (req: Request, res: Response) => {
         const { nom, dateNaissance, genre } = req.body;
         
         try {

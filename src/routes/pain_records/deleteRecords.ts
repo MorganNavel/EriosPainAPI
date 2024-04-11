@@ -4,7 +4,7 @@ import { Op } from 'sequelize';
 import { authMiddleware, validateStreamDatesMiddleware } from '../../middleware';
 
 export default (app: Express) => {
-    app.delete('/api/patient/:patientId/streams', authMiddleware, validateStreamDatesMiddleware ,async (req: Request, res: Response) => {
+    app.delete('/api/patient/:patientId/streams', validateStreamDatesMiddleware, authMiddleware, async (req: Request, res: Response) => {
         const { startDate, endDate } = req.body; // Supposons que les dates de début et de fin sont envoyées dans le corps de la requête
         const patientId = req.params.patientId;
     
