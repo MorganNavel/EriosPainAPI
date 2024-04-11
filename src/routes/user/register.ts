@@ -27,7 +27,6 @@ export default (app: Express) => {
 
             // Création d'un nouvel utilisateur dans la base de données
             const newUser = await User.create({ nom, prenom, username, password: hashedPassword, occupation, salt });
-            console.log(process.env.JWT_SECRET)
 
             // Génération du JWT
             const accessToken = sign({ userId: newUser.dataValues.id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
