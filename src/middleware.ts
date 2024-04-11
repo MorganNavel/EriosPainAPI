@@ -2,6 +2,22 @@ import { Request, Response, NextFunction } from "express";
 import { dateParser } from "./helper";
 import jwt from "jsonwebtoken";
 import { patientSchema } from "./schemes/patient";
+import { userSchema,loginSchema } from "./schemes/users";
+export function validateLoginSchemaMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  validateMiddleware(loginSchema)(req, res, next)
+}
+
+export function validateRegisterSchema(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  validateMiddleware(userSchema)(req, res, next)
+}
 export function validateNaissanceDateMiddleware(
     req: Request,
     res: Response,
@@ -77,7 +93,7 @@ export function authMiddleware(
     try {
       const decoded: any = jwt.verify(token, process.env.SECRET_KEY!);
       //TOKEN DECODED
-      req.body.loggedUserEmail = decoded.email;
+      req.body.userId = decoded.userId;
       next();
     } catch (error) {
       return res.status(401).json({ message: "Non autorisé. Token invalide." });

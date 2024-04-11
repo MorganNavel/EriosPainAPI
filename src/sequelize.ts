@@ -1,6 +1,7 @@
 import { DataTypes, Sequelize } from 'sequelize';
 import { PatientModel } from './models/PatientModel';
 import { PainRecordModel } from './models/PainRecordModel';
+import { UserModel } from './models/UserModel';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -21,12 +22,13 @@ const sequelize = new Sequelize({
 export function initDb(){
     const Patient = PatientModel(sequelize, DataTypes);
     const PainRecord = PainRecordModel(sequelize, DataTypes);
+    const User = UserModel(sequelize, DataTypes);
     Patient.hasMany(PainRecord);
     PainRecord.belongsTo(Patient);
     
     (async () => {
         try {
-            await sequelize.sync({ force: false });
+            await sequelize.sync({ force: true });
             return sequelize;
         } catch (error) {
             console.error('Unable to sync database:', error);

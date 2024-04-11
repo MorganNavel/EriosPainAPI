@@ -1,7 +1,12 @@
-import { Patient } from './models/PatientModel';
-
-import casual from 'casual';
-
+import deleteRecords from "./routes/pain_records/deleteRecords";
+import getRecords from "./routes/pain_records/getRecords";
+import uploadRecords from "./routes/pain_records/uploadRecords";
+import addPatient from "./routes/patients/addPatient";
+import deletePatient from "./routes/patients/deletePatient";
+import getPatients from "./routes/patients/getPatients";
+import { Express } from "express";
+import login from "./routes/user/login";
+import register from "./routes/user/register";
 
 function dateParser(date: string): Date {
   const dateSplitted = date.split(" ");
@@ -20,7 +25,27 @@ function dateParser(date: string): Date {
   return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
 }
 
+function loadRoutes(app: Express) {
+  patientRoutes(app);
+  painRecordsRoutes(app);
+  userRoutes(app);
+}
+function patientRoutes(app: Express) {
+  deletePatient(app);
+  getPatients(app);
+  addPatient(app);
+}
+function userRoutes(app: Express) {
+  login(app);
+  register(app);
+}
+function painRecordsRoutes(app: Express) {
+  deleteRecords(app);
+  getRecords(app);
+  uploadRecords(app);
+}
+
 
   
 
-export { dateParser };
+export { dateParser, loadRoutes };

@@ -11,7 +11,14 @@ function PatientModel(sequelize: Sequelize, DataTypes: any) {
             primaryKey: true,
             autoIncrement: true,
           },
+          IPP:{
+            type: DataTypes.INTEGER
+          },
           nom: {
+            type: DataTypes.STRING,
+            allowNull: false,
+          },
+          prenom: {
             type: DataTypes.STRING,
             allowNull: false,
           },
@@ -20,8 +27,8 @@ function PatientModel(sequelize: Sequelize, DataTypes: any) {
             allowNull: false,
           },
           genre: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.ENUM('M', 'F', 'O'), // Définition de l'énumération avec les valeurs autorisées
+            allowNull: false
           },
           
         },
