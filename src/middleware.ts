@@ -105,6 +105,7 @@ export function patientMiddleware(
     res: Response,
     next: NextFunction,
   ) {
+    console.log(req.body)
     validateMiddleware(patientSchema)(req, res, next);
   }
 
