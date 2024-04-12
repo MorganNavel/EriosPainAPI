@@ -7,6 +7,8 @@ import getPatients from "./routes/patients/getPatients";
 import { Express } from "express";
 import login from "./routes/user/login";
 import register from "./routes/user/register";
+import deleteUser from "./routes/user/deleteUser";
+import getUsers from "./routes/user/getUsers";
 
 function dateParser(date: string): Date {
   const dateSplitted = date.split(" ");
@@ -38,6 +40,8 @@ function patientRoutes(app: Express) {
 function userRoutes(app: Express) {
   login(app);
   register(app);
+  deleteUser(app);
+  getUsers(app);
 }
 function painRecordsRoutes(app: Express) {
   deleteRecords(app);

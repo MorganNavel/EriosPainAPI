@@ -1,8 +1,6 @@
 import { Express, Request, Response } from "express";
 import { PainRecord } from "../../models/PainRecordModel";
 import { authMiddleware, validateStreamDateMiddleware } from "../../middleware";
-import { forEachChild } from "typescript";
-
 
 export default (app: Express) => {
     app.post("/api/patient/:id/streams", validateStreamDateMiddleware, authMiddleware ,async (req: Request, res: Response) => {
@@ -31,7 +29,6 @@ export default (app: Express) => {
             patientId: id,
         }
         ));
-        console.log(painRecords)
         try {
             await PainRecord.bulkCreate(painRecords);
             return res.status(200).json({message:"Success"})

@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import { User } from "../../models/UserModel";
-import { compare, hash } from "bcrypt";
+import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();

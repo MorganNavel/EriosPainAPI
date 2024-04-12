@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { initDb } from "./sequelize";
 import { loadRoutes } from "./helper";
-import { authMiddleware } from "./middleware";
 dotenv.config();
 
 const port = process.env.API_PORT;
