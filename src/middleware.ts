@@ -3,6 +3,7 @@ import { dateParser } from "./helper";
 import jwt from "jsonwebtoken";
 import { patientSchema } from "./schemes/patient";
 import { userSchema,loginSchema } from "./schemes/users";
+import { User } from "./models/UserModel";
 export function validateLoginSchemaMiddleware(
   req: Request,
   res: Response,
@@ -79,7 +80,7 @@ function validateDate(dateString: string) {
   
 
 
-export function authMiddleware(
+export async function authMiddleware(
     req: Request,
     res: Response,
     next: NextFunction,
@@ -93,6 +94,10 @@ export function authMiddleware(
     try {
       const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
       //TOKEN DECODED
+      const user = await User.findByPk(decoded.userId);
+      if(!user){
+        return res.status(401).json({ message: "Non autorisé. Token invalide." });
+      }
       req.body.userId = decoded.userId;
       next();
     } catch (error) {
