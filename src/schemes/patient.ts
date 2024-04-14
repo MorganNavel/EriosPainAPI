@@ -4,5 +4,5 @@ export const patientSchema = Joi.object({
     prenom: Joi.string().required(),
     IPP: Joi.string().required(),
     dateNaissance: Joi.date().required(),
-    genre: Joi.string().valid('M', 'F', 'O').required()
+    genre: Joi.string().valid('H', 'F', 'O').required()
 });

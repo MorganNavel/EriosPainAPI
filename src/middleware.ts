@@ -86,7 +86,6 @@ export async function authMiddleware(
     next: NextFunction,
   ) {
     const token = req.headers.authorization?.split(" ")[1]; // Récupérer le JWT du header Authorization
-    console.log(token)
     if (!token) {
       return res.status(401).json({ message: "Non autorisé. Token manquant." });
     }
@@ -110,7 +109,6 @@ export function patientMiddleware(
     res: Response,
     next: NextFunction,
   ) {
-    console.log(req.body)
     validateMiddleware(patientSchema)(req, res, next);
   }
 
