@@ -94,6 +94,7 @@ function validateDate(dateString: string) {
   if (isNaN(dateObj.getTime())) {
     return null;
   }
+
   return dateObj;
 }
 
