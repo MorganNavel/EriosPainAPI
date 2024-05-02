@@ -15,7 +15,7 @@ function dateParser(date: string): Date {
   if (dateSplitted.length !== 2) {
     dateSplitted[1]= "00:00:00";
   }
-  const datePart = dateSplitted[0].split(/[\/-]/);
+  const datePart = dateSplitted[0].split(/[-\/]/);
   const timePart = dateSplitted[1].split(":");
   const day = datePart[0];
   const month = datePart[1];
@@ -23,6 +23,7 @@ function dateParser(date: string): Date {
   const hour = timePart[0];
   const minute = timePart[1];
   const second = timePart[2];
+  console.log(day, month, year, hour, minute, second);
 
   return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
 }

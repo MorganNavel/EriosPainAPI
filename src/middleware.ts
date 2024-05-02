@@ -44,6 +44,7 @@ export function validateStreamDateMiddleware(
   next: NextFunction
 ) {
   const { records } = req.body;
+  console.log(records);
   for (const record of records) {
     const dateObj = validateDate(record.evaluation_date);
     if (!dateObj) {
