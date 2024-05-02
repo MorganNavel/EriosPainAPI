@@ -1,10 +1,15 @@
 import { Express, Request, Response } from "express";
 import { PainRecord } from "../../models/PainRecordModel";
 import { authMiddleware, validateStreamDateMiddleware } from "../../middleware";
+import { Patient } from "../../models/PatientModel";
 
 export default (app: Express) => {
-    app.post("/api/patient/:id/streams", validateStreamDateMiddleware, authMiddleware ,async (req: Request, res: Response) => {
-        /*
+  app.post(
+    "/api/patient/:id/streams",
+    validateStreamDateMiddleware,
+    authMiddleware,
+    async (req: Request, res: Response) => {
+      /*
         Example of request body
         {
         "records":[
@@ -19,21 +24,27 @@ export default (app: Express) => {
                     ...
                     ]
         */
-        const { records } = req.body;
-        const id  = parseInt(req.params.id);
-    
-        const painRecords = records.map((record: any) => (
-        {
-            level: record.level,
-            evaluation_date: record.evaluation_date,
-            patientId: id,
+      const { records } = req.body;
+      const id = parseInt(req.params.id);
+
+      const painRecords = records.map((record: any) => ({
+        level: record.level,
+        evaluation_date: record.evaluation_date,
+        patientId: id,
+      }));
+      const patient = await Patient.findByPk(id);
+      console.log(patient);
+      try {
+        // await PainRecord.bulkCreate(painRecords);
+        for (const record of painRecords) {
+          console.log(record);
+          await PainRecord.create(record);
         }
-        ));
-        try {
-            await PainRecord.bulkCreate(painRecords);
-            return res.status(200).json({message:"Success"})
-        } catch(error){
-        return res.status(500).json({message:"Fail", error})
-        }
-    });
-}
+
+        return res.status(200).json({ message: "Success" });
+      } catch (error) {
+        return res.status(500).json({ message: "Fail", error });
+      }
+    }
+  );
+};
