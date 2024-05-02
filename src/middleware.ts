@@ -89,12 +89,12 @@ export function validateStreamDatesMiddleware(
   req.body.endDate = endDateObj;
   next();
 }
+
 function validateDate(dateString: string) {
   const dateObj = dateParser(dateString);
   if (isNaN(dateObj.getTime())) {
     return null;
   }
-
   return dateObj;
 }
 
