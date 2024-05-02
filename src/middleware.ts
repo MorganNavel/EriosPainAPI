@@ -81,38 +81,34 @@ function validateDate(dateString: string) {
 
 
 export async function authMiddleware(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
-    const token = req.headers.authorization?.split(" ")[1]; // Récupérer le JWT du header Authorization
-    console.log(token)
-    if (!token) {
-      return res.status(401).json({ message: "Non autorisé. Token manquant." });
-    }
-  
-    try {
-      const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
-      //TOKEN DECODED
-      const user = await User.findByPk(decoded.userId);
-      if(!user){
-        return res.status(401).json({ message: "Non autorisé. Token invalide." });
-      }
-      req.body.userId = decoded.userId;
-      next();
-    } catch (error) {
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const token = req.headers.authorization?.split(" ")[1]; // Récupérer le JWT du header Authorization
+  if (!token) {
+    return res.status(401).json({ message: "Non autorisé. Token manquant." });
+  }
+
+  try {
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+    //TOKEN DECODED
+    const user = await User.findByPk(decoded.userId);
+    if (!user) {
       return res.status(401).json({ message: "Non autorisé. Token invalide." });
     }
+    console.log(user);
+    console.log(decoded);
+    req.body.userId = decoded.userId;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Non autorisé. Token invalide." });
+  }
 }
 
-export function patientMiddleware(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
-    console.log(req.body)
-    validateMiddleware(patientSchema)(req, res, next);
-  }
+export function patientMiddleware(req: Request, res: Response, next: NextFunction) {
+  validateMiddleware(patientSchema)(req, res, next);
+}
 
 function validateMiddleware(schema: any) {
     return (req: Request, res: Response, next: NextFunction) => {
