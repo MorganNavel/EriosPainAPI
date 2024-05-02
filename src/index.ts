@@ -5,7 +5,7 @@ import { initDb } from "./sequelize";
 import { loadRoutes } from "./helper";
 dotenv.config();
 
-const port = process.env.API_PORT;
+const port = process.env.API_PORT || 8080;
 
 const app = express();
 
