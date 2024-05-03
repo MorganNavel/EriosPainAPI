@@ -23,7 +23,6 @@ export default (app: Express) => {
 
             // Vérification du mot de passe en utilisant bcrypt
             const passwordMatch = await compare(password+salt, user.dataValues.password);
-            console.log(password,user.dataValues.password)
 
             if (!passwordMatch) {
                 return res.status(401).json({ message:"Fail" , error:"Mot de passe incorrect" });

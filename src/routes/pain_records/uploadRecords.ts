@@ -35,10 +35,6 @@ export default (app: Express) => {
 
       try {
         await PainRecord.bulkCreate(painRecords);
-        // for (const record of painRecords) {
-        //   console.log(record);
-        //   await PainRecord.create(record);
-        // }
 
         return res.status(200).json({ message: "Success" });
       } catch (error) {

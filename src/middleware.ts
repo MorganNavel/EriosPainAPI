@@ -44,7 +44,6 @@ export function validateStreamDateMiddleware(
   next: NextFunction
 ) {
   const { records } = req.body;
-  console.log(records);
   for (const record of records) {
     const dateObj = validateDate(record.evaluation_date);
     if (!dateObj) {
@@ -115,8 +114,6 @@ export async function authMiddleware(
     if (!user) {
       return res.status(401).json({ message: "Non autorisé. Token invalide." });
     }
-    console.log(user);
-    console.log(decoded);
     req.body.userId = decoded.userId;
     next();
   } catch (error) {

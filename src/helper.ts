@@ -23,7 +23,6 @@ function dateParser(date: string): Date {
   const hour = timePart[0];
   const minute = timePart[1];
   const second = timePart[2];
-  console.log(day, month, year, hour, minute, second);
 
   return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
 }
