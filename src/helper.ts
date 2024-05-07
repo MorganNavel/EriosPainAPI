@@ -9,11 +9,12 @@ import login from "./routes/user/login";
 import register from "./routes/user/register";
 import deleteUser from "./routes/user/deleteUser";
 import getUsers from "./routes/user/getUsers";
+import getUserLogged from "./routes/user/getUserLogged";
 
 function dateParser(date: string): Date {
   const dateSplitted = date.split(" ");
   if (dateSplitted.length !== 2) {
-    dateSplitted[1]= "00:00:00";
+    dateSplitted[1] = "00:00:00";
   }
   const datePart = dateSplitted[0].split(/[-\/]/);
   const timePart = dateSplitted[1].split(":");
@@ -24,7 +25,14 @@ function dateParser(date: string): Date {
   const minute = timePart[1];
   const second = timePart[2];
 
-  return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
+  return new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(day),
+    Number(hour),
+    Number(minute),
+    Number(second)
+  );
 }
 
 function loadRoutes(app: Express) {
@@ -42,6 +50,7 @@ function userRoutes(app: Express) {
   register(app);
   deleteUser(app);
   getUsers(app);
+  getUserLogged(app);
 }
 function painRecordsRoutes(app: Express) {
   deleteRecords(app);
