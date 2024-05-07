@@ -3,7 +3,7 @@ import { Express, Request, Response } from "express";
 import { authMiddleware } from "../../middleware";
 
 export default (app: Express) => {
-  app.get("/api/users", authMiddleware, async (req: Request, res: Response) => {
+  app.get("/api/user", authMiddleware, async (req: Request, res: Response) => {
     const { userId } = req.body;
     try {
       const user = await User.findByPk(userId);
