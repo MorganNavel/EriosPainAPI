@@ -30,8 +30,8 @@ export function validateNaissanceDateMiddleware(
     return res
       .status(400)
       .json({
-        message:
-          "Le format de la date de naissance doit être (DD/MM/YYYY ou DD-MM-YYYY)",
+        message: "Fail",
+        details: "Le format de la date de naissance doit être (DD/MM/YYYY ou DD-MM-YYYY)",
       });
   }
   req.body.dateNaissance = dateObj;
@@ -44,15 +44,14 @@ export function validateStreamDateMiddleware(
   next: NextFunction
 ) {
   const { records } = req.body;
-  console.log(records);
   for (const record of records) {
     const dateObj = validateDate(record.evaluation_date);
     if (!dateObj) {
       return res
         .status(400)
         .json({
-          message:
-            "Le format de la date d'évaluation doit être (DD/MM/YYYY ou DD-MM-YYYY)",
+          message:  "Fail",
+          details: "Le format de la date d'évaluation doit être (DD/MM/YYYY ou DD-MM-YYYY)",
         });
     }
     record.evaluation_date = dateObj;
@@ -73,7 +72,7 @@ export function validateStreamDatesMiddleware(
     return res
       .status(400)
       .json({
-        message: "Le format des dates doit être (DD/MM/YYYY ou DD-MM-YYYY)",
+        message: "Fail", details: "Le format des dates doit être (DD/MM/YYYY ou DD-MM-YYYY)",
       });
   }
 
@@ -81,7 +80,7 @@ export function validateStreamDatesMiddleware(
     return res
       .status(400)
       .json({
-        message: "La date de début doit être antérieure à la date de fin",
+        message: "Fail", details: "La date de début doit être antérieure à la date de fin",
       });
   }
 
@@ -105,7 +104,7 @@ export async function authMiddleware(
 ) {
   const token = req.headers.authorization?.split(" ")[1]; // Récupérer le JWT du header Authorization
   if (!token) {
-    return res.status(401).json({ message: "Non autorisé. Token manquant." });
+    return res.status(401).json({ message: "Fail", details: "Non autorisé. Token manquant." });
   }
 
   try {
@@ -113,14 +112,12 @@ export async function authMiddleware(
     //TOKEN DECODED
     const user = await User.findByPk(decoded.userId);
     if (!user) {
-      return res.status(401).json({ message: "Non autorisé. Token invalide." });
+      return res.status(401).json({ message: "Fail", details: "Non autorisé. Token invalide." });
     }
-    console.log(user);
-    console.log(decoded);
     req.body.userId = decoded.userId;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Non autorisé. Token invalide." });
+    return res.status(401).json({ message: "Fail", details: "Non autorisé. Token invalide." });
   }
 }
 
@@ -138,7 +135,7 @@ function validateMiddleware(schema: any) {
     if (error) {
       return res
         .status(400)
-        .json({ message: "Failed", error: error.details[0].message });
+        .json({ message: "Fail", error: error.details[0].message });
     }
     next();
   };

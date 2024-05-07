@@ -32,14 +32,9 @@ export default (app: Express) => {
         evaluation_date: record.evaluation_date,
         patientId: id,
       }));
-      const patient = await Patient.findByPk(id);
-      console.log(patient);
+
       try {
-        // await PainRecord.bulkCreate(painRecords);
-        for (const record of painRecords) {
-          console.log(record);
-          await PainRecord.create(record);
-        }
+        await PainRecord.bulkCreate(painRecords);
 
         return res.status(200).json({ message: "Success" });
       } catch (error) {

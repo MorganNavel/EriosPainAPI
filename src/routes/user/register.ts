@@ -34,8 +34,7 @@ export default (app: Express) => {
             // Envoi de la réponse avec le JWT
             res.status(201).json({message:"Sucess", user: {id: newUser.dataValues.id, nom, prenom, username, occupation}, accessToken });
         } catch (error) {
-            console.error("Erreur lors de l'inscription :", error);
-            res.status(500).json({ message:"Fail" , error:"Erreur lors de l'inscription",erreur:error });
+            res.status(500).json({ message:"Fail" , error:"Erreur lors de l'inscription",details:error });
         }
     });
 };

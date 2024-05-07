@@ -1,8 +1,8 @@
-import { DataTypes, Sequelize } from 'sequelize';
-import { PatientModel } from './models/PatientModel';
-import { PainRecordModel } from './models/PainRecordModel';
-import { UserModel } from './models/UserModel';
-import dotenv from 'dotenv';
+import { DataTypes, Sequelize } from "sequelize";
+import { PatientModel } from "./models/PatientModel";
+import { PainRecordModel } from "./models/PainRecordModel";
+import { UserModel } from "./models/UserModel";
+import dotenv from "dotenv";
 dotenv.config();
 
 const sequelize = new Sequelize({
@@ -36,5 +36,4 @@ export function initDb() {
     }
   })();
 }
-export {sequelize}
-
+export { sequelize };
