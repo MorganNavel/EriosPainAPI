@@ -2,7 +2,7 @@
 
 ## Environnement de Test DPI
 
-Ce référentiel sert d'environnement de test visant à reproduire un système d'Information Patient Numérisé (DPI), bien que sa véracité ne soit pas garantie. L'objectif principal est de simuler les fonctionnalités et les interactions au sein d'un système DPI, notamment en ce qui concerne la gestion des données des patients.
+Ce référentiel sert d'environnement de test visant à reproduire un système du Dossier Patient Informatisé (DPI), bien que sa véracité ne soit pas garantie, car nous ne disposons d'aucune information quant à sa structure. L'objectif principal est de simuler les fonctionnalités et les interactions au sein d'un système DPI, notamment en ce qui concerne la gestion des données des patients et plus particulièrement dans notre cas, la donnée de la douleur.
 
 ### Hébergement de la Base de Données
 
@@ -10,15 +10,23 @@ La base de données est hébergée sur un serveur gratuit utilisant **Render**, 
 
 ### Schéma de la Base de Données
 
-La base de données comprend deux entités principales : **Patient** et **PainRecord**.
+La base de données comprend trois entités principales : **User**, **Patient** et **PainRecord**.
+#### User :
+- **id** : Identifiant unique de l'utilisateur.
+- **nom** : Nom de l'utilisateur.
+- **prenom** : Prénom de l'utilisateur.
+- **username** : Nom d'utilisateur unique.
+- **password** : Mot de passe de l'utilisateur.
+- **occupation** : Occupation de l'utilisateur.
+- **salt** : Sel pour le hachage du mot de passe.
 
-#### Patient
+#### Patient :
 - **id** : Identifiant unique pour chaque patient.
 - **nom** : Nom du patient.
 - **Date de naissance** : Date de naissance du patient.
 - **genre** : Genre du patient.
 
-#### PainRecord
+#### PainRecord :
 - **id** : Identifiant unique pour chaque enregistrement de douleur.
 - **level** : Niveau d'intensité de la douleur enregistrée.
 - **evaluation date** : Date de l'évaluation de la douleur.
@@ -31,14 +39,23 @@ L'API expose divers points d'accès pour interagir avec la base de données.
 #### Points d'accès GET :
 - **"/api/patient/:id/streams"** : Récupère les données de douleur pour un patient spécifique.
 - **"/api/patients"** : Récupère des informations sur tous les patients.
+- **"/api/user"** : Récupère l'utilisateur connecté grâce au token stocké dans le navigateur via un cookie
+
 
 #### Points d'accès POST :
 - **"/api/patient/:id/streams"** : Ajoute des données de douleur pour un patient spécifique.
 - **"/api/patient"** : Ajoute un nouveau patient à la base de données.
+- **"/api/login"** : Permet à l'utilisateur de se connecter
+- **"/api/register"** : Permet de créer un nouvelle utilisateur
+
+
 
 #### Points d'accès DELETE :
 - **"/api/patient/:id/streams"** : Supprime les données de douleur pour un patient spécifique dans un intervalle donné.
 - **"/api/patient/:id"** : Supprime un patient de la base de données.
+- **"/api/user/:id"** : Supprime un utilisateur de la base de données.
+
+Notons que le point d'accès "delete" n'est pas particulièrement utile. Bien qu'il puisse être utile en développement, son utilisation en production peut représenter un risque surtout en milieu médical.
 
 ### Utilisation
 
